@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --red: #ff0000;
+}
+.text-danger {
+  color: var(--red) !important;
+}
+.page-loader {
+  padding: 25% 0%;
+}

@@ -1,0 +1,186 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-6 col-sm-12 align-self-center">
+      <div class="bg-light p-3">
+        <div class="container">
+          <div class="col-md-12 col-sm-12">
+            <p class="h3 pt-3 text-denter">ADD TO DO</p>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <form [formGroup]="todoForm" (ngSubmit)="addTodo()">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    placeholder="Enter title"
+                    formControlName="title"
+                  />
+                </div>
+                <div
+                  class="form-group"
+                  *ngIf="submitted && todoForm.get('title').errors"
+                >
+                  <p
+                    class="text-danger"
+                    *ngIf="
+                      todoForm.get('title').errors &&
+                      todoForm.get('title').errors.required
+                    "
+                  >
+                    Title is required
+                  </p>
+                </div>
+
+                <div class="form-group">
+                  <textarea
+                    class="form-control"
+                    id="description"
+                    placeholder="Enter description"
+                    formControlName="description"
+                  ></textarea>
+                </div>
+                <div
+                  class="form-group"
+                  *ngIf="submitted && todoForm.get('description').errors"
+                >
+                  <p
+                    class="text-danger"
+                    *ngIf="
+                      todoForm.get('description').errors &&
+                      todoForm.get('description').errors.required
+                    "
+                  >
+                    Description is required
+                  </p>
+                </div>
+
+                <button type="submit" class="btn btn-primary">SUBMIT</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-action active">
+      To Do List( Click on the TO DO item to mark it DONE )
+    </li>
+    <li
+      class="list-group-item"
+      *ngFor="let todo of todoList; let i = index"
+      [ngClass]="{ 'strike-through': todo.deleted }"
+    >
+      <div class="row">
+        <div class="col-md-10">
+          <span>{{ todo.title + ' - ' + todo.description | titlecase }}</span>
+        </div>
+        <div class="col-md-2 text-center">
+          <i
+            *ngIf="!todo.deleted"
+            class="fa fa-pencil todo-margin"
+            aria-hidden="true"
+            (click)="toggleEdit(i)"
+          ></i>
+
+          <i
+            *ngIf="!todo.deleted && !todo.edit"
+            class="fa fa-check todo-margin"
+            aria-hidden="true"
+            (click)="doneTodo(i)"
+          ></i>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="todo.edit">
+        <div class="offset-md-3 col-md-6">
+          <form [formGroup]="updateTodoForm" (ngSubmit)="updateTodo(i)">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                placeholder="Enter title"
+                formControlName="title"
+              />
+            </div>
+            <div class="form-group" *ngIf="updateTodoForm.get('title').errors">
+              <p
+                class="text-danger"
+                *ngIf="
+                  updateTodoForm.get('title').errors &&
+                  updateTodoForm.get('title').errors.required
+                "
+              >
+                Title is required
+              </p>
+            </div>
+
+            <div class="form-group">
+              <textarea
+                class="form-control"
+                id="description"
+                placeholder="Enter description"
+                formControlName="description"
+              ></textarea>
+            </div>
+            <div
+              class="form-group"
+              *ngIf="updateTodoForm.get('description').errors"
+            >
+              <p
+                class="text-danger"
+                *ngIf="
+                  updateTodoForm.get('description').errors &&
+                  updateTodoForm.get('description').errors.required
+                "
+              >
+                Description is required
+              </p>
+            </div>
+
+            <button type="submit" class="btn btn-primary">SUBMIT</button>
+          </form>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <!-- <div class="list-group">
+    <button
+      type="button"
+      disabled
+      class="list-group-item list-group-item-action active"
+    >
+      To Do List( Click on the TO DO item to mark it DONE )
+    </button>
+    <ng-container *ngFor="let todo of todoList; let i = index">
+      <button
+        type="button"
+        [disabled]="todo.deleted"
+        class="list-group-item list-group-item-action"
+        (click)="doneTodo(i)"
+        [ngClass]="{ 'strike-through': todo.deleted }"
+      >
+        {{ todo.title + ' - ' + todo.description | titlecase }}
+      </button>
+    </ng-container>
+
+    <ng-container *ngIf="todoList.length === 0">
+      <button
+        type="button"
+        disabled
+        class="list-group-item list-group-item-action"
+      >
+        No To Do Items Found
+      </button>
+    </ng-container>
+  </div> -->
+</div>

@@ -1,0 +1,26 @@
+{
+  "name": "daily-tasks-backend-service",
+  "version": "1.0.0",
+  "description": "A simple to do app which allows users to: register, login and perform CRUD operations on the to-do items",
+  "scripts": {
+    "serve": "npm start",
+    "start": "nodemon ./src/app/index.js --signal SIGTERM",
+    "build": "kill $(lsof -t -i:8000) & npm run serve"
+  },
+  "keywords": [
+    "express",
+    "to do"
+  ],
+  "author": "dorjko",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.5.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
